@@ -1,17 +1,26 @@
 import React from "react";
 import editButton from '../images/edit-button.svg';
-function Main(props) {
-  const [userName, setUserName] = React.useState();
-  const [userDescription, setUserDescription] = React.useState();
-  const [userAvatar, setUserAvatar] = React.useState();
+import api from '../utils/Api.js';
 
-  
+function Main(props) {
+  const [userName, setUserName] = React.useState("");
+  const [userDescription, setUserDescription] = React.useState("");
+  const [userAvatar, setUserAvatar] = React.useState("");
+
+  React.useEffect( () => {
+    api.getUserInfo().then((data) => {
+    setUserName(data.name);
+    setUserDescription(data.about);
+    setUserAvatar(data.avatar)
+    }).catch((err) => {
+      console.log(err);
+  })})
     return(
         <main className="main">
 
         <section className="profile">
           <div className="profile__information">
-            <div className="profile__avatar-container" onClick = {props.onEditAvatar}>
+            <div className="profile__avatar-container" onClick = {props.onEditAvatar} style={{ backgroundImage: `url(${userAvatar})`}} >
               <img
                 className="profile__avatar-edit"
                 src={editButton}
@@ -21,7 +30,7 @@ function Main(props) {
 
             <div className="profile__info">
               <div className="profile__wrapper">
-                <h1 className="profile__name">Жак-Ив Кусто</h1>
+                <h1 className="profile__name">{userName}</h1>
                 <button
                   type="button"
                   aria-label="Кнопка открытия попапа"
@@ -29,7 +38,7 @@ function Main(props) {
                   onClick = {props.onEditProfile}
                 ></button>
               </div>
-              <p className="profile__profession">Исследователь океана</p>
+              <p className="profile__profession">{userDescription}</p>
             </div>
           </div>
           <button
