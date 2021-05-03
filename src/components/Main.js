@@ -8,6 +8,7 @@ function Main(props) {
   const [userDescription, setUserDescription] = React.useState("");
   const [userAvatar, setUserAvatar] = React.useState("");
   const [cards, setCards] = React.useState([]);
+
   React.useEffect(() => {
     api
       .getUserInfo()
@@ -71,9 +72,9 @@ function Main(props) {
       </section>
 
       <section className="elements">
-        {cards.map(({ _id, ...card }) => (
-          <Card key={_id} {...card} />
-        ))}
+        {cards.map(card => 
+          <Card card = {card} key={card._id} onCardClick = {props.onCardClick} />
+        )}
       </section>
     </main>
   );

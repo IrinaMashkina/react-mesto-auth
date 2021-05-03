@@ -13,6 +13,11 @@ function App() {
   );
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(false);
+
+function handleCardClick(card) {
+  setSelectedCard(card);
+}
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
@@ -30,15 +35,19 @@ function App() {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
+    setSelectedCard(false)
   }
+
 
   return (
     <div className="page">
       <Header />
+
       <Main
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
         onEditAvatar={handleEditAvatarClick}
+        onCardClick = {handleCardClick}
       />
 
       <PopupWithForm
@@ -131,7 +140,8 @@ function App() {
           <span className="popup__input-error" id="input-avatar-link-error"></span>
         </section>
       </PopupWithForm>
-      <ImagePopup />
+
+      <ImagePopup card = {selectedCard} onClose = {closeAllPopups}/>
       <Footer />
     </div>
   );
