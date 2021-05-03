@@ -1,16 +1,21 @@
 import React from "react";
-
+import editButton from '../images/edit-button.svg';
 function Main(props) {
+  const [userName, setUserName] = React.useState();
+  const [userDescription, setUserDescription] = React.useState();
+  const [userAvatar, setUserAvatar] = React.useState();
+
+  
     return(
         <main className="main">
 
         <section className="profile">
           <div className="profile__information">
-            <div className="profile__avatar-container">
+            <div className="profile__avatar-container" onClick = {props.onEditAvatar}>
               <img
                 className="profile__avatar-edit"
-                src="<%=require('./images/edit-button.svg')%>"
-               onClick = {props.onEditAvatar}
+                src={editButton}
+               
               />
             </div>
 
