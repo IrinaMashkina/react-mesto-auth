@@ -1,11 +1,12 @@
 import React from 'react';
-import './App.css';
+import './index.css';
+import logo from './images/logo.svg';
 
 function App() {
   return (
     <div className="page">
     <header className="header">
-        <img src="<%=require('./images/logo.svg')%>" alt="Логотип сервиса Место." className="header__logo"/>
+        <img src={logo} alt="Логотип сервиса Место." className="header__logo"/>
     </header>
 
 
