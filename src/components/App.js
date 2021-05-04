@@ -59,7 +59,7 @@ function handleCardClick(card) {
         name="edit"
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
-      >
+      > 
         <section className="popup__form-section">
           <input
             className="popup__input popup__input_type_name"
