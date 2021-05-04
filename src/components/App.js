@@ -15,6 +15,8 @@ function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(false);
 
+  const [name,setName] = React.useState('');
+  const [profession, setProfession] = React.useState('');
 function handleCardClick(card) {
   setSelectedCard(card);
 }
@@ -23,8 +25,10 @@ function handleCardClick(card) {
     setEditAvatarPopupOpen(true);
   }
 
-  function handleEditProfileClick() {
+  function handleEditProfileClick(userName, userDescription) {
     setEditProfilePopupOpen(true);
+    setName(userName);
+    setProfession(userDescription);
   }
 
   function handleAddPlaceClick() {
@@ -65,7 +69,7 @@ function handleCardClick(card) {
             required
             minLength="2"
             maxLength="40"
-            value=""
+            defaultValue={name}
           />
           <span className="popup__input-error" id="input-name-error"></span>
         </section>
@@ -78,7 +82,7 @@ function handleCardClick(card) {
             required
             minLength="2"
             maxLength="200"
-            value=""
+            defaultValue={profession}
           />
           <span className="popup__input-error" id="input-job-error"></span>
         </section>
@@ -99,7 +103,7 @@ function handleCardClick(card) {
             required
             minLength="2"
             maxLength="30"
-            value=""
+            defaultValue=""
             placeholder="Название"
           />
           <span className="popup__input-error" id="input-card-title-error"></span>
@@ -111,7 +115,7 @@ function handleCardClick(card) {
             name="link"
             type="url"
             required
-            value=""
+            defaultValue=""
             placeholder="Ссылка на картинку"
           />
           <span className="popup__input-error" id="input-card-link-error"></span>
@@ -134,7 +138,7 @@ function handleCardClick(card) {
             name="link"
             type="url"
             required
-            value=""
+            defaultValue=""
             placeholder="https://somewebsite.com/someimage.jpg"
           />
           <span className="popup__input-error" id="input-avatar-link-error"></span>

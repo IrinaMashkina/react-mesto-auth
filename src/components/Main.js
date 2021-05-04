@@ -57,7 +57,7 @@ function Main(props) {
                 type="button"
                 aria-label="Кнопка открытия попапа"
                 className="profile__edit-button"
-                onClick={props.onEditProfile}
+                onClick={() => props.onEditProfile(userName, userDescription)}
               ></button>
             </div>
             <p className="profile__profession">{userDescription}</p>
