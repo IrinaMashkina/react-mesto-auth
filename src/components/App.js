@@ -13,13 +13,14 @@ function App() {
   );
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
-  const [name,setName] = React.useState('');
-  const [profession, setProfession] = React.useState('');
-function handleCardClick(card) {
-  setSelectedCard(card);
-}
+  const [name, setName] = React.useState("");
+  const [profession, setProfession] = React.useState("");
+
+  function handleCardClick(card) {
+    setSelectedCard(card);
+  }
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
@@ -39,9 +40,8 @@ function handleCardClick(card) {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
-    setSelectedCard(false)
+    setSelectedCard(null);
   }
-
 
   return (
     <div className="page">
@@ -51,7 +51,7 @@ function handleCardClick(card) {
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
         onEditAvatar={handleEditAvatarClick}
-        onCardClick = {handleCardClick}
+        onCardClick={handleCardClick}
       />
 
       <PopupWithForm
@@ -59,7 +59,7 @@ function handleCardClick(card) {
         name="edit"
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
-      > 
+      >
         <section className="popup__form-section">
           <input
             className="popup__input popup__input_type_name"
@@ -106,7 +106,10 @@ function handleCardClick(card) {
             defaultValue=""
             placeholder="Название"
           />
-          <span className="popup__input-error" id="input-card-title-error"></span>
+          <span
+            className="popup__input-error"
+            id="input-card-title-error"
+          ></span>
         </section>
         <section className="popup__form-section">
           <input
@@ -118,9 +121,11 @@ function handleCardClick(card) {
             defaultValue=""
             placeholder="Ссылка на картинку"
           />
-          <span className="popup__input-error" id="input-card-link-error"></span>
+          <span
+            className="popup__input-error"
+            id="input-card-link-error"
+          ></span>
         </section>
-      
       </PopupWithForm>
 
       <PopupWithForm title="Вы уверены?" nameName="delete"></PopupWithForm>
@@ -141,11 +146,14 @@ function handleCardClick(card) {
             defaultValue=""
             placeholder="https://somewebsite.com/someimage.jpg"
           />
-          <span className="popup__input-error" id="input-avatar-link-error"></span>
+          <span
+            className="popup__input-error"
+            id="input-avatar-link-error"
+          ></span>
         </section>
       </PopupWithForm>
 
-      <ImagePopup card = {selectedCard} onClose = {closeAllPopups}/>
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       <Footer />
     </div>
   );
