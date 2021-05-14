@@ -5,6 +5,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import Header from "./Header.js";
 import Main from "./Main.js";
 import PopupWithForm from "./PopupWithForm.js";
+import EditProfilePopup from "./EditProfilePopup.js";
 import ImagePopup from "./ImagePopup.js";
 import Footer from "./Footer.js";
 import api from "../utils/Api";
@@ -53,6 +54,13 @@ function App() {
     setSelectedCard(null);
   }
 
+  function handleUpdateUser(user) {
+    api.editUserInfo(user).then((res) => {
+      setCurrentUser(res);
+      closeAllPopups();
+    });
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -64,40 +72,11 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
         />
-
-        <PopupWithForm
-          title="Редактировать профиль"
-          name="edit"
+        <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-        >
-          <section className="popup__form-section">
-            <input
-              className="popup__input popup__input_type_name"
-              id="input-name"
-              name="name"
-              type="text"
-              required
-              minLength="2"
-              maxLength="40"
-              defaultValue={name}
-            />
-            <span className="popup__input-error" id="input-name-error"></span>
-          </section>
-          <section className="popup__form-section">
-            <input
-              className="popup__input popup__input_type_job"
-              id="input-job"
-              name="about"
-              type="text"
-              required
-              minLength="2"
-              maxLength="200"
-              defaultValue={profession}
-            />
-            <span className="popup__input-error" id="input-job-error"></span>
-          </section>
-        </PopupWithForm>
+          onUpdateUser={handleUpdateUser}
+        />
 
         <PopupWithForm
           title="Новое место"
