@@ -2,25 +2,14 @@ import React from "react";
 import Card from "./Card.js";
 import editButton from "../images/edit-button.svg";
 import api from "../utils/Api.js";
+import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
 function Main(props) {
-  const [userName, setUserName] = React.useState("");
-  const [userDescription, setUserDescription] = React.useState("");
-  const [userAvatar, setUserAvatar] = React.useState("");
+  const currentUser = React.useContext(CurrentUserContext);
+  
   const [cards, setCards] = React.useState([]);
 
-  React.useEffect(() => {
-    api
-      .getUserInfo()
-      .then((data) => {
-        setUserName(data.name);
-        setUserDescription(data.about);
-        setUserAvatar(data.avatar);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+
 
   React.useEffect(() => {
     api
@@ -45,22 +34,22 @@ function Main(props) {
           <div
             className="profile__avatar-container"
             onClick={props.onEditAvatar}
-            style={{ backgroundImage: `url(${userAvatar})` }}
+            style={{ backgroundImage: `url(${currentUser.avatar})` }}
           >
             <img className="profile__avatar-edit" src={editButton} />
           </div>
 
           <div className="profile__info">
             <div className="profile__wrapper">
-              <h1 className="profile__name">{userName}</h1>
+              <h1 className="profile__name">{currentUser.name}</h1>
               <button
                 type="button"
                 aria-label="Кнопка открытия попапа"
                 className="profile__edit-button"
-                onClick={() => props.onEditProfile(userName, userDescription)}
+                onClick={() => props.onEditProfile(currentUser.name, currentUser.about)}
               ></button>
             </div>
-            <p className="profile__profession">{userDescription}</p>
+            <p className="profile__profession">{currentUser.about}</p>
           </div>
         </div>
         <button
