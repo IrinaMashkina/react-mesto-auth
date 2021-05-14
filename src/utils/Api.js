@@ -66,6 +66,14 @@ class Api {
     }).then(this.handleResponse);
   }
 
+  changeLikeCardStatus(id, isLiked) {
+    return fetch(`${this._baseUrl}/cards/likes/${id}`, {
+      method: isLiked ? "PUT" : "DELETE",
+      headers: this._headers,
+    }).then(this.handleResponse);
+  }
+    
+
   editAvatar(link) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
