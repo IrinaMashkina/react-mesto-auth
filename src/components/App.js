@@ -6,9 +6,11 @@ import Header from "./Header.js";
 import Main from "./Main.js";
 import PopupWithForm from "./PopupWithForm.js";
 import EditProfilePopup from "./EditProfilePopup.js";
+import EditAvatarPopup from './EditAvatarPopup.js';
 import ImagePopup from "./ImagePopup.js";
 import Footer from "./Footer.js";
 import api from "../utils/Api";
+
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
@@ -58,7 +60,14 @@ function App() {
     api.editUserInfo(user).then((res) => {
       setCurrentUser(res);
       closeAllPopups();
-    });
+    }).catch((err) => console.log(err));
+  }
+
+  function handleUpdateAavatar(user) {
+    api.editAvatar(user.avatar).then((res) => {
+      setCurrentUser(res);
+      closeAllPopups();
+    }).catch((err) => console.log(err));
   }
 
   return (
@@ -77,7 +86,7 @@ function App() {
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
         />
-
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAavatar}/>
         <PopupWithForm
           title="Новое место"
           name="card-add"
@@ -120,28 +129,7 @@ function App() {
 
         <PopupWithForm title="Вы уверены?" nameName="delete"></PopupWithForm>
 
-        <PopupWithForm
-          title="Обновить аватар"
-          name="avatar"
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-        >
-          <section className="popup__form-section">
-            <input
-              className="popup__input popup__input_type_link"
-              id="input-avatar-link"
-              name="link"
-              type="url"
-              required
-              defaultValue=""
-              placeholder="https://somewebsite.com/someimage.jpg"
-            />
-            <span
-              className="popup__input-error"
-              id="input-avatar-link-error"
-            ></span>
-          </section>
-        </PopupWithForm>
+       
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         <Footer />
