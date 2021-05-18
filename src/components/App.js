@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import "../index.css";
-
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import Header from "./Header.js";
 import Main from "./Main.js";
@@ -15,8 +14,13 @@ import api from "../utils/api";
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
+    React.useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     api
       .getInitialCards()
       .then((data) => {
@@ -41,15 +45,6 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
-    React.useState(false);
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(null);
-
-  const [name, setName] = React.useState("");
-  const [profession, setProfession] = React.useState("");
-
   function handleCardClick(card) {
     setSelectedCard(card);
   }
@@ -58,10 +53,8 @@ function App() {
     setEditAvatarPopupOpen(true);
   }
 
-  function handleEditProfileClick(userName, userDescription) {
+  function handleEditProfileClick() {
     setEditProfilePopupOpen(true);
-    setName(userName);
-    setProfession(userDescription);
   }
 
   function handleAddPlaceClick() {
@@ -95,9 +88,9 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleAddPlaceSubmit({name, link}) {
-    api.addNewCard({name, link}).then((newCard) => {
-      setCards([newCard, ...cards]);;
+  function handleAddPlaceSubmit({ name, link }) {
+    api.addNewCard({ name, link }).then((newCard) => {
+      setCards([newCard, ...cards]);
       closeAllPopups();
     });
   }
@@ -146,7 +139,11 @@ function App() {
           onUpdateAvatar={handleUpdateAavatar}
         />
 
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          onAddPlace={handleAddPlaceSubmit}
+        />
 
         <PopupWithForm title="Вы уверены?" nameName="delete"></PopupWithForm>
 

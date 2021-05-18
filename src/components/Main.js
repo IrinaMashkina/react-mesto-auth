@@ -1,7 +1,6 @@
 import React from "react";
 import Card from "./Card.js";
 import editButton from "../images/edit-button.svg";
-import api from "../utils/api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
 
