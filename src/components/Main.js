@@ -16,7 +16,7 @@ function Main(props) {
             onClick={props.onEditAvatar}
             style={{ backgroundImage: `url(${currentUser.avatar})` }}
           >
-            <img className="profile__avatar-edit" src={editButton} />
+            <img className="profile__avatar-edit" src={editButton} alt="Кнопка редактирования аватара."/>
           </div>
 
           <div className="profile__info">

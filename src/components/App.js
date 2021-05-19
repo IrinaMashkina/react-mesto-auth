@@ -27,7 +27,7 @@ function App() {
         setCards(
           data.map((item) => ({
             likes: item.likes,
-            owner: item.owner._id,
+            owner: item.owner,
             _id: item._id,
             name: item.name,
             alt: item.name,
@@ -92,7 +92,7 @@ function App() {
     api.addNewCard({ name, link }).then((newCard) => {
       setCards([newCard, ...cards]);
       closeAllPopups();
-    });
+    }).catch((err) => console.log(err));
   }
 
   function handleCardLike(card) {
@@ -102,7 +102,7 @@ function App() {
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
       setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
-    });
+    }).catch((err) => console.log(err));
   }
 
   function handleCardDelete(card) {

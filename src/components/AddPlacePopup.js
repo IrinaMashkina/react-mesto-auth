@@ -11,6 +11,8 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       name: cardName,
       link: cardLink,
     });
+    setCardName("");
+    setCardLink("")
   }
 
   function handleChangeCardName(e) {
@@ -40,7 +42,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
           required
           minLength="2"
           maxLength="30"
-          defaultValue=""
+          value={cardName}
           placeholder="Название"
           onChange={handleChangeCardName}
         />
@@ -53,7 +55,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
           name="link"
           type="url"
           required
-          defaultValue=""
+          value={cardLink}
           placeholder="Ссылка на картинку"
           onChange={handleChangeCardLink}
         />
