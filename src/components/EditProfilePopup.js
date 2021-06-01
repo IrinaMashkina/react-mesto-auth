@@ -48,7 +48,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
           required
           minLength="2"
           maxLength="40"
-          defaultValue={currentUser.name}
+          
           value={name? name: ""}
           onChange={handleChangeName}
         />
@@ -63,7 +63,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
           required
           minLength="2"
           maxLength="200"
-          // defaultValue={currentUser.about}
+
           value={description ? description: ""}
           onChange={handleChangeDescription}
         />

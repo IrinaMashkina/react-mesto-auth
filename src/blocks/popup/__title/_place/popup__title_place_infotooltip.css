@@ -1,0 +1,12 @@
+.popup__title_place_infotooltip {
+  max-width: 358px;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  margin: 0;
+  margin-bottom: calc(60px - 37px);
+ 
+}
