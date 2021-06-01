@@ -21,7 +21,7 @@ function Main(props) {
 
           <div className="profile__info">
             <div className="profile__wrapper">
-              <h1 className="profile__name">{currentUser.name}</h1>
+              <h1 className="profile__name">{!props.isLoadingUserInfo? currentUser.name : '...'}</h1>
               <button
                 type="button"
                 aria-label="Кнопка открытия попапа"
@@ -31,7 +31,7 @@ function Main(props) {
                 }
               ></button>
             </div>
-            <p className="profile__profession">{currentUser.about}</p>
+            <p className="profile__profession">{!props.isLoadingUserInfo? currentUser.about : '...'}</p>
           </div>
         </div>
         <button
@@ -43,7 +43,8 @@ function Main(props) {
       </section>
 
       <section className="elements">
-        {props.cards.map((card) => (
+        {props.isLoadingInitialCards && <p className='elements__message'>Загружаются картинки...</p>}
+        {!props.isLoadingInitialCards && props.cards.map((card) => (
           <Card
             card={card}
             key={card._id}

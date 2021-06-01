@@ -24,6 +24,7 @@
 @import url(blocks/profile/__profession/profile__profession.css);
 @import url(blocks/profile/__add-button/profile__add-button.css);
 @import url(blocks/elements/elements.css);
+@import url(blocks/elements/__message/elements__message.css);
 @import url(blocks/card/__image/card__image.css);
 @import url(blocks/card/card.css);
 @import url(blocks/card/__caption/card__caption.css);

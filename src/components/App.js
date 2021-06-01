@@ -35,7 +35,17 @@ function App() {
 
   const history = useHistory();
 
+  const [isLoadingInitialCards, setIsLoadingInitialCards] = React.useState(false);
+  const [isLoadingEditAvatar, setIsLoadingEditAvatar] = React.useState(false);
+  const [isLoadingUserInfo, setIsLoadingUserInfo] = React.useState(false);
+  const [isLoadingAddNewCard, setIsLoadingAddNewCard] = React.useState(false);
+
+
+
+
+
   useEffect(() => {
+    setIsLoadingInitialCards(true);
     api
       .getInitialCards()
       .then((data) => {
@@ -50,14 +60,16 @@ function App() {
           }))
         );
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err)).finally(() => setIsLoadingInitialCards(false));
   }, []);
 
   useEffect(() => {
+    setIsLoadingUserInfo(true);
     api
       .getUserInfo()
       .then((res) => setCurrentUser(res))
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoadingUserInfo(false));
   }, []);
 
   function handleCardClick(card) {
@@ -99,23 +111,27 @@ function App() {
   }
 
   function handleUpdateAavatar(user) {
+    setIsLoadingEditAvatar(true);
     api
       .editAvatar(user.avatar)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoadingEditAvatar(false));
   }
 
   function handleAddPlaceSubmit({ name, link }) {
+    setIsLoadingAddNewCard(true);
     api
       .addNewCard({ name, link })
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() =>setIsLoadingAddNewCard(false));
   }
 
   function handleCardLike(card) {
@@ -216,6 +232,8 @@ function App() {
             cards={cards}
             onCardLike={handleCardLike}
             onCardDelete={handleCardDelete}
+            isLoadingEditAvatar={isLoadingInitialCards}
+            isLoadingUserInfo={isLoadingUserInfo}
           ></ProtectedRoute>
         </Switch>
 
@@ -223,17 +241,20 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+          isLoadingUserInfo={isLoadingUserInfo}
         />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAavatar}
+          isLoadingEditAvatar={isLoadingEditAvatar}
         />
 
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
+          isLoadingAddNewCard={isLoadingAddNewCard}
         />
 
         <PopupWithForm title="Вы уверены?" nameName="delete"></PopupWithForm>
