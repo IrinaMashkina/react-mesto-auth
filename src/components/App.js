@@ -8,6 +8,7 @@ import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup.js";
 import AddPlacePopup from "./AddPlacePopup.js";
 import ImagePopup from "./ImagePopup.js";
+import PopupDeleteCard from "./PopupDeleteCard";
 import Footer from "./Footer.js";
 import Register from "./Register.js";
 import Login from "./Login.js";
@@ -26,12 +27,14 @@ function App() {
 
   const [cards, setCards] = React.useState([]);
   const [selectedCard, setSelectedCard] = React.useState(null);
+  const [cardForDeletion, setCardForDeletion] = React.useState(null);
 
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
+  const [isPopupDeleteCardOpen, setIsPopupDeleteCardOpen] = React.useState(false);
 
   const history = useHistory();
 
@@ -39,10 +42,6 @@ function App() {
   const [isLoadingEditAvatar, setIsLoadingEditAvatar] = React.useState(false);
   const [isLoadingUserInfo, setIsLoadingUserInfo] = React.useState(false);
   const [isLoadingAddNewCard, setIsLoadingAddNewCard] = React.useState(false);
-
-
-
-
 
   useEffect(() => {
     setIsLoadingInitialCards(true);
@@ -98,6 +97,7 @@ function App() {
     setAddPlacePopupOpen(false);
     setSelectedCard(null);
     setIsInfoTooltipOpen(false);
+    setIsPopupDeleteCardOpen(false);
   }
 
   function handleUpdateUser(user) {
@@ -111,6 +111,8 @@ function App() {
       .catch((err) => console.log(err))
       .finally(() => setIsLoadingUserInfo(false));
   }
+
+  
 
   function handleUpdateAavatar(user) {
     setIsLoadingEditAvatar(true);
@@ -148,13 +150,20 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleCardDelete(card) {
+  function handleCardDelete(e) {
+    e.preventDefault();
     api
-      .deleteCard(card._id)
+      .deleteCard(cardForDeletion._id)
       .then(() => {
-        setCards(cards.filter((item) => item._id !== card._id));
+        setCards(cards.filter((item) => item._id !== cardForDeletion._id));
+        closeAllPopups();
       })
       .catch((err) => console.log(err));
+  }
+
+  function handleCardDeletePopup(card) {
+    setCardForDeletion(card);
+    setIsPopupDeleteCardOpen(true);
   }
 
   function handleAuthorization(data) {
@@ -233,9 +242,10 @@ function App() {
             onCardClick={handleCardClick}
             cards={cards}
             onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
+            onPopupDeleteCardOpen={handleCardDeletePopup}
             isLoadingEditAvatar={isLoadingInitialCards}
             isLoadingUserInfo={isLoadingUserInfo}
+
           ></ProtectedRoute>
         </Switch>
 
@@ -259,7 +269,6 @@ function App() {
           isLoadingAddNewCard={isLoadingAddNewCard}
         />
 
-        <PopupWithForm title="Вы уверены?" nameName="delete"></PopupWithForm>
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         <InfoTooltip
@@ -267,6 +276,14 @@ function App() {
           onClose={closeAllPopups}
           isSuccessSignup={isSuccessSignup}
         />
+
+        <PopupDeleteCard  
+      isOpen={isPopupDeleteCardOpen}
+      onClose={closeAllPopups}
+      title="Вы уверены?"
+      buttonText="Да"
+      onSubmit={handleCardDelete}
+      />
         <Footer />
       </div>
     </CurrentUserContext.Provider>
