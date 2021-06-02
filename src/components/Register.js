@@ -28,7 +28,10 @@ const Register = ({ onRegistration }) => {
       password: password,
       email: email,
     });
+    setEmail("");
+    setPassword("");
   };
+  
   return (
     <Sign
       title="Регистрация"

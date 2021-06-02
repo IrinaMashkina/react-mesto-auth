@@ -12,12 +12,15 @@ const Login = ({ onAuthotization }) => {
   function handleChangePassword(e) {
     setPassword(e.target.value);
   }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onAuthotization({
       password,
-      email
+      email,
     });
+    setEmail("");
+    setPassword("");
   };
 
   return (

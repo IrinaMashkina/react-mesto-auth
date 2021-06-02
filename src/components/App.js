@@ -101,13 +101,15 @@ function App() {
   }
 
   function handleUpdateUser(user) {
+    setIsLoadingUserInfo(true);
     api
       .editUserInfo(user)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoadingUserInfo(false));
   }
 
   function handleUpdateAavatar(user) {
