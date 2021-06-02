@@ -1,5 +1,6 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm.js";
+import FormValidator from "./FormValidator.js";
 
 function EditAvatarPopup({
   isOpen,
@@ -7,18 +8,18 @@ function EditAvatarPopup({
   onUpdateAvatar,
   isLoadingEditAvatar,
 }) {
-  const [avatar, setAvatar] = React.useState("");
+  // const [avatar, setAvatar] = React.useState("");
 
-  function handleChangeAvatar(e) {
-    setAvatar(e.target.value);
-  }
+  const { inputValues, errorMessages, isValid, handleInputChange, resetForm } =
+  FormValidator({});
+
+  React.useEffect(() => {
+    resetForm();
+  }, [isOpen, resetForm])
 
   function handleSubmit(e) {
     e.preventDefault();
-    onUpdateAvatar({
-      avatar: avatar,
-    });
-    setAvatar("");
+    onUpdateAvatar(inputValues.link);
   }
 
   return (
@@ -30,22 +31,22 @@ function EditAvatarPopup({
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isValid={isValid}
     >
       <section className="popup__form-section">
         <input
-          onChange={handleChangeAvatar}
+          onChange={handleInputChange}
           className="popup__input popup__input_type_link"
           id="input-avatar-link"
           name="link"
           type="url"
           required
-          defaultValue=""
+          value = {inputValues.link ? inputValues.link : ""}
           placeholder="https://somewebsite.com/someimage.jpg"
         />
-        <span
-          className="popup__input-error"
+        <span className={!isValid ? "popup__input-error popup__input-error_active" : "popup__input-error" }
           id="input-avatar-link-error"
-        ></span>
+        >{errorMessages.link}</span>
       </section>
     </PopupWithForm>
   );

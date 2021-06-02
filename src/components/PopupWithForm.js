@@ -8,7 +8,7 @@ function PopupWithForm(props) {
       }`}
     >
       <form
-        className="popup__container popup__form"
+        className="popup__container popup__form forms"
         name={props.name}
         action="#"
         noValidate
@@ -16,13 +16,14 @@ function PopupWithForm(props) {
       >
         <h2 className="popup__title">{props.title}</h2>
         {props.children}
-        <button className={props.isLoading? "popup__submit popup__submit_type_save popup__submit_disabled" : "popup__submit popup__submit_type_save"} type="submit">{props.buttonText}
+        <button  className={(props.isLoading || !props.isValid) ? "popup__submit popup__submit_type_save popup__submit_disabled" : "popup__submit popup__submit_type_save"} type="submit">{props.buttonText}
         </button>
         <button
           className="popup__close-button"
           type="button"
           aria-label="Закрыть"
           onClick={props.onClose}
+          
         ></button>
       </form>
     </section>

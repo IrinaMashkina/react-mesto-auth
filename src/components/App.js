@@ -3,7 +3,6 @@ import "../index.css";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import Header from "./Header.js";
 import Main from "./Main.js";
-import PopupWithForm from "./PopupWithForm.js";
 import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup.js";
 import AddPlacePopup from "./AddPlacePopup.js";
@@ -115,10 +114,10 @@ function App() {
 
   
 
-  function handleUpdateAavatar(user) {
+  function handleUpdateAavatar(link) {
     setIsLoadingEditAvatar(true);
     api
-      .editAvatar(user.avatar)
+      .editAvatar(link)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();

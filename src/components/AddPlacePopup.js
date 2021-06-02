@@ -1,27 +1,22 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
+import FormValidator from "./FormValidator.js";
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingAddNewCard }) {
-  const [cardName, setCardName] = React.useState("");
-  const [cardLink, setCardLink] = React.useState("");
+
+
+  const { inputValues, errorMessages, isValid, handleInputChange, resetForm } =
+    FormValidator({});
+
 
   function handleSubmit(e) {
     e.preventDefault();
-    onAddPlace({
-      name: cardName,
-      link: cardLink,
-    });
-    setCardName("");
-    setCardLink("")
-  }
+    onAddPlace(inputValues);
+  };
 
-  function handleChangeCardName(e) {
-    setCardName(e.target.value);
-  }
-
-  function handleChangeCardLink(e) {
-    setCardLink(e.target.value);
-  }
+  React.useEffect(() => {
+    resetForm();
+  }, [isOpen, resetForm])
 
 
   return (
@@ -33,6 +28,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingAddNewCard }) {
       onClose={onClose}
       isLoading={isLoadingAddNewCard}
       onSubmit={handleSubmit}
+      isValid={isValid}
     >
       <section className="popup__form-section">
         <input
@@ -43,11 +39,11 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingAddNewCard }) {
           required
           minLength="2"
           maxLength="30"
-          value={cardName}
+          value={inputValues.name? inputValues.name :  ""}
           placeholder="Название"
-          onChange={handleChangeCardName}
+          onChange={handleInputChange}
         />
-        <span className="popup__input-error" id="input-card-title-error"></span>
+       <span className={!isValid ? "popup__input-error popup__input-error_active" : "popup__input-error" } id="input-card-title-error">{errorMessages.name}</span>
       </section>
       <section className="popup__form-section">
         <input
@@ -56,11 +52,11 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingAddNewCard }) {
           name="link"
           type="url"
           required
-          value={cardLink}
+          value={inputValues.link ? inputValues.link : ""}
           placeholder="Ссылка на картинку"
-          onChange={handleChangeCardLink}
+          onChange={handleInputChange}
         />
-        <span className="popup__input-error" id="input-card-link-error"></span>
+        <span className={!isValid ? "popup__input-error popup__input-error_active" : "popup__input-error" } id="input-card-link-error">{errorMessages.link}</span>
       </section>
     </PopupWithForm>
   );

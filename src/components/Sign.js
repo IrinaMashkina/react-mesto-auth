@@ -2,7 +2,7 @@ import React from 'react';
 
 const Sign = (props) => {
 return (
-    <form className='form' noValidate onSubmit={props.onSubmit}>
+    <form className='form forms' noValidate onSubmit={props.onSubmit}>
         <h2 className='form__title'>{props.title}</h2>
         {props.children}
         <button type='submit' className='form__button-submit'>{props.buttonText}</button>
