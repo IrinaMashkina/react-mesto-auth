@@ -42,6 +42,7 @@ function App() {
   const [isLoadingEditAvatar, setIsLoadingEditAvatar] = React.useState(false);
   const [isLoadingUserInfo, setIsLoadingUserInfo] = React.useState(false);
   const [isLoadingAddNewCard, setIsLoadingAddNewCard] = React.useState(false);
+  const [isLoadingDeleteCard, setIsLoadingDeleteCard] = React.useState(false);
 
   useEffect(() => {
     setIsLoadingInitialCards(true);
@@ -152,13 +153,15 @@ function App() {
 
   function handleCardDelete(e) {
     e.preventDefault();
+    setIsLoadingDeleteCard(true);
     api
       .deleteCard(cardForDeletion._id)
       .then(() => {
         setCards(cards.filter((item) => item._id !== cardForDeletion._id));
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoadingDeleteCard(false));
   }
 
   function handleCardDeletePopup(card) {
@@ -283,6 +286,7 @@ function App() {
       title="Вы уверены?"
       buttonText="Да"
       onSubmit={handleCardDelete}
+      isLoading={isLoadingDeleteCard}
       />
         <Footer />
       </div>

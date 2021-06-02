@@ -5,10 +5,11 @@ function PopupDeleteCard(props) {
   return (
     <PopupWithForm
       title={props.title}
-      buttonText={props.buttonText}
+      buttonText={props.isLoading ? "Удаление..." : props.buttonText}
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit={props.onSubmit}
+      isLoading={props.isLoading}
     ></PopupWithForm>
   );
 }
