@@ -42,6 +42,8 @@ function App() {
   const [isLoadingUserInfo, setIsLoadingUserInfo] = React.useState(false);
   const [isLoadingAddNewCard, setIsLoadingAddNewCard] = React.useState(false);
   const [isLoadingDeleteCard, setIsLoadingDeleteCard] = React.useState(false);
+  const [isLoadingSignup, setIsLoadingSignup] = React.useState(false);
+  const [isLoadingSignin, setIsLoadingSignin] = React.useState(false);
 
   useEffect(() => {
     setIsLoadingInitialCards(true);
@@ -169,6 +171,7 @@ function App() {
   }
 
   function handleAuthorization(data) {
+    setIsLoadingSignin(true);
     auth
       .authorize(data)
       .then((data) => {
@@ -176,7 +179,8 @@ function App() {
         localStorage.setItem("jwt", data.token);
         history.push("/");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoadingSignin(false));
   }
 
   function handleSignOut() {
@@ -186,6 +190,7 @@ function App() {
   }
 
   function handleRegistration(data) {
+    setIsLoadingSignup(true);
     auth
       .register(data)
       .then((data) => {
@@ -197,7 +202,8 @@ function App() {
         console.log(err);
         setIsSuccessSignup(false);
         handleInfoTooltipOpen();
-      });
+      })
+      .finally(() => setIsLoadingSignup(false));
   }
 
   const handleCheckToken = React.useCallback(() => {
@@ -229,10 +235,10 @@ function App() {
         />
         <Switch>
           <Route path="/sign-up">
-            <Register onRegistration={handleRegistration} />
+            <Register onRegistration={handleRegistration} isLoading={isLoadingSignup}/>
           </Route>
           <Route path="/sign-in">
-            <Login onAuthotization={handleAuthorization} />
+            <Login onAuthotization={handleAuthorization} isLoading={isLoadingSignin} />
           </Route>
           <ProtectedRoute
             path="/"

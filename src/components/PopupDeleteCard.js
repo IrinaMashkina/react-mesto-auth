@@ -10,6 +10,7 @@ function PopupDeleteCard(props) {
       onClose={props.onClose}
       onSubmit={props.onSubmit}
       isLoading={props.isLoading}
+      isValid={true}
     ></PopupWithForm>
   );
 }

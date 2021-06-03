@@ -3,10 +3,10 @@ import Sign from "./Sign.js";
 import { Link } from "react-router-dom";
 import FormValidator from "./FormValidator";
 
-const Register = ({ onRegistration }) => {
+const Register = ({ onRegistration, isLoading }) => {
   const link = (
-    <p className="">
-      Уже зарегистрированы?{" "}
+    <p className="form__question">
+      Уже зарегистрированы?
       <Link className="form__link" to="/sign-in">
         Войти
       </Link>
@@ -43,6 +43,7 @@ const Register = ({ onRegistration }) => {
       link={link}
       onSubmit={handleSubmit}
       isValid={isValid}
+      isLoading={isLoading}
     >
       <section className="popup__form-section">
         <input

@@ -2,7 +2,7 @@ import React from "react";
 import Sign from "./Sign.js";
 import FormValidator from "./FormValidator";
 
-const Login = ({ onAuthotization }) => {
+const Login = ({ onAuthotization, isLoading }) => {
   const { inputValues, errorMessages, isValid, handleInputChange, resetForm } =
     FormValidator({});
 
@@ -31,6 +31,7 @@ const Login = ({ onAuthotization }) => {
       buttonText="Войти"
       onSubmit={handleSubmit}
       isValid={isValid}
+      isLoading={isLoading}
     >
       <section className="popup__form-section">
         <input

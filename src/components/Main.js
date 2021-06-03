@@ -21,7 +21,7 @@ function Main(props) {
 
           <div className="profile__info">
             <div className="profile__wrapper">
-              <h1 className="profile__name">{!props.isLoadingUserInfo? currentUser.name : '...'}</h1>
+              <h1 className="profile__name">{!props.isLoadingUserInfo? currentUser.name : '......'}</h1>
               <button
                 type="button"
                 aria-label="Кнопка открытия попапа"
@@ -31,7 +31,7 @@ function Main(props) {
                 }
               ></button>
             </div>
-            <p className="profile__profession">{!props.isLoadingUserInfo? currentUser.about : '...'}</p>
+            <p className="profile__profession">{!props.isLoadingUserInfo? currentUser.about : '......'}</p>
           </div>
         </div>
         <button
