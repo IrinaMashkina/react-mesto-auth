@@ -1,6 +1,7 @@
 import React from "react";
 import Sign from "./Sign.js";
 import { Link } from "react-router-dom";
+import FormValidator from "./FormValidator";
 
 const Register = ({ onRegistration }) => {
   const link = (
@@ -12,53 +13,79 @@ const Register = ({ onRegistration }) => {
     </p>
   );
 
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const { inputValues, errorMessages, isValid, handleInputChange, resetForm } =
+    FormValidator({});
 
-  function handleChangeEmail(e) {
-    setEmail(e.target.value);
-  }
+  // const [email, setEmail] = React.useState("");
+  // const [password, setPassword] = React.useState("");
 
-  function handleChangePassword(e) {
-    setPassword(e.target.value);
-  }
+  // function handleChangeEmail(e) {
+  //   setEmail(e.target.value);
+  // }
+
+  // function handleChangePassword(e) {
+  //   setPassword(e.target.value);
+  // }
+
+  React.useEffect(() => {
+    resetForm();
+  }, [resetForm]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onRegistration({
-      password: password,
-      email: email,
-    });
-    setEmail("");
-    setPassword("");
+    onRegistration(inputValues);
   };
-  
+
   return (
     <Sign
       title="Регистрация"
       buttonText="Зарегистрироваться"
       link={link}
       onSubmit={handleSubmit}
+      isValid={isValid}
     >
-      <input
-        className="form__input"
-        type="email"
-        placeholder="Email"
-        required
-        minLength="2"
-        maxLength="40"
-        onChange={handleChangeEmail}
-      />
-      <span className=""></span>
-      <input
-        className="form__input"
-        type="password"
-        placeholder="Пароль"
-        required
-        minLength="2"
-        maxLength="40"
-        onChange={handleChangePassword}
-      />
-      <span className=""></span>
+      <section className="popup__form-section">
+        <input
+          className="form__input"
+          type="email"
+          name="email"
+          placeholder="Email"
+          required
+          minLength="2"
+          maxLength="40"
+          onChange={handleInputChange}
+        />
+        <span
+          className={
+            !isValid
+              ? "popup__input-error popup__input-error_active"
+              : "popup__input-error"
+          }
+        >
+          {errorMessages.email}
+        </span>
+      </section>
+      <section className="popup__form-section">
+        <input
+          className="form__input"
+          type="password"
+          name="password"
+          placeholder="Пароль"
+          required
+          minLength="2"
+          maxLength="40"
+          onChange={handleInputChange}
+        />
+        <span
+          className={
+            !isValid
+              ? "popup__input-error popup__input-error_active"
+              : "popup__input-error"
+          }
+        >
+          {errorMessages.password}
+        </span>
+      </section>
     </Sign>
   );
 };

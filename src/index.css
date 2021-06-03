@@ -12,6 +12,7 @@
 @import url(blocks/form/form__input/form__input.css);
 @import url(blocks/form/form__input-error/form__input-error.css);
 @import url(blocks/form/form__button-submit/form__button-submit.css);
+@import url(blocks/form/form__button-submit/_disabled/form__button-submit_disabled.css);
 @import url(blocks/form/__link/form__link.css);
 @import url(blocks/profile/profile.css);
 @import url(blocks/profile/__information/profile__information.css);
