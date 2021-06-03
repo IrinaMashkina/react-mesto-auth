@@ -8,7 +8,7 @@ const Register = ({ onRegistration, isLoading }) => {
     <p className="form__question">
       Уже зарегистрированы?
       <Link className="form__link" to="/sign-in">
-        Войти
+         Войти
       </Link>
     </p>
   );
