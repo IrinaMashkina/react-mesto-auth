@@ -18,7 +18,7 @@ function Header({ loggedIn, onSignOut, userEmail }) {
         <div className="header__wrapper header__wrapper_mobile">
           <div className="header__hamburger-menu-wrapper">
             <address className="header__address header__address_mobile">
-              {userEmail && userEmail}
+              {userEmail}
             </address>
             <button
               type="button"

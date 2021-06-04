@@ -1,7 +1,7 @@
 import React from "react";
 import Sign from "./Sign.js";
 import { Link } from "react-router-dom";
-import FormValidator from "./FormValidator";
+import FormValidator from "../hooks/useFormValidator";
 
 const Register = ({ onRegistration, isLoading }) => {
   const link = (

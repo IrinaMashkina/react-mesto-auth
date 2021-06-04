@@ -1,14 +1,14 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
-import FormValidator from './FormValidator.js';
+import useFormValidator from '../hooks/useFormValidator.js';
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoadingUserInfo }) {
 
   
   const currentUser = React.useContext(CurrentUserContext);
 
-  const {inputValues, errorMessages, isValid, handleInputChange, resetForm} = FormValidator({});
+  const {inputValues, errorMessages, isValid, handleInputChange, resetForm} = useFormValidator({});
 
   React.useEffect(() => {
     if (currentUser) {

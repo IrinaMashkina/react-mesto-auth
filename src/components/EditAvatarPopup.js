@@ -1,6 +1,6 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm.js";
-import FormValidator from "./FormValidator.js";
+import useFormValidator from "../hooks/useFormValidator.js";
 
 function EditAvatarPopup({
   isOpen,
@@ -11,7 +11,7 @@ function EditAvatarPopup({
   // const [avatar, setAvatar] = React.useState("");
 
   const { inputValues, errorMessages, isValid, handleInputChange, resetForm } =
-  FormValidator({});
+  useFormValidator({});
 
   React.useEffect(() => {
     resetForm();

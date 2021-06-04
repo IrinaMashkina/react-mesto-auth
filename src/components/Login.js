@@ -1,10 +1,10 @@
 import React from "react";
 import Sign from "./Sign.js";
-import FormValidator from "./FormValidator";
+import useFormValidator from "../hooks/useFormValidator";
 
 const Login = ({ onAuthotization, isLoading }) => {
   const { inputValues, errorMessages, isValid, handleInputChange, resetForm } =
-    FormValidator({});
+    useFormValidator({});
 
   // const [email, setEmail] = React.useState("");
   // const [password, setPassword] = React.useState("");

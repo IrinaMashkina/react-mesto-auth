@@ -1,12 +1,12 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
-import FormValidator from "./FormValidator.js";
+import useFormValidator from "../hooks/useFormValidator.js";
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoadingAddNewCard }) {
 
 
   const { inputValues, errorMessages, isValid, handleInputChange, resetForm } =
-    FormValidator({});
+    useFormValidator({});
 
 
   function handleSubmit(e) {

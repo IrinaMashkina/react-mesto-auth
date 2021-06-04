@@ -45,25 +45,29 @@ function App() {
   const [isLoadingSignup, setIsLoadingSignup] = React.useState(false);
   const [isLoadingSignin, setIsLoadingSignin] = React.useState(false);
 
+  
+ 
   useEffect(() => {
-    setIsLoadingInitialCards(true);
-    api
-      .getInitialCards()
-      .then((data) => {
-        setCards(
-          data.map((item) => ({
-            likes: item.likes,
-            owner: item.owner,
-            _id: item._id,
-            name: item.name,
-            alt: item.name,
-            link: item.link,
-          }))
-        );
-      })
-      .catch((err) => console.log(err)).finally(() => setIsLoadingInitialCards(false));
-  }, []);
-
+    if (loggedIn) {
+      setIsLoadingInitialCards(true);
+      api
+        .getInitialCards()
+        .then((data) => {
+          setCards(
+            data.map((item) => ({
+              likes: item.likes,
+              owner: item.owner,
+              _id: item._id,
+              name: item.name,
+              alt: item.name,
+              link: item.link,
+            }))
+          );
+        })
+        .catch((err) => console.log(err)).finally(() => setIsLoadingInitialCards(false))
+    }
+  }, [loggedIn]);
+   
   useEffect(() => {
     setIsLoadingUserInfo(true);
     api
@@ -174,9 +178,10 @@ function App() {
     setIsLoadingSignin(true);
     auth
       .authorize(data)
-      .then((data) => {
+      .then((token) => {
+        setUserEmail(data.email);
+        localStorage.setItem("jwt", token.token);
         setLoggedIn(true);
-        localStorage.setItem("jwt", data.token);
         history.push("/");
       })
       .catch((err) => console.log(err))
@@ -283,6 +288,8 @@ function App() {
           isOpen={isInfoTooltipOpen}
           onClose={closeAllPopups}
           isSuccessSignup={isSuccessSignup}
+          successText="Вы успешно зарегистрировались!"
+          unSuccessText="Что-то пошло не так! Попробуйте ещё раз."
         />
 
         <PopupDeleteCard  

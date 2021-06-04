@@ -17,8 +17,8 @@ const InfoTooltip = (props) => {
         />
         <h3 className="popup__title_place_infotooltip">
           {props.isSuccessSignup
-            ? "Вы успешно зарегистрировались!"
-            : "Что-то пошло не так! Попробуйте ещё раз."}
+            ? props.successText
+            : props.unSuccessText}
         </h3>
         <button
           onClick={props.onClose}
