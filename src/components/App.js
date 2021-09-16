@@ -44,8 +44,6 @@ function App() {
   const [isLoadingDeleteCard, setIsLoadingDeleteCard] = React.useState(false);
   const [isLoadingSignup, setIsLoadingSignup] = React.useState(false);
   const [isLoadingSignin, setIsLoadingSignin] = React.useState(false);
-
-  
  
   useEffect(() => {
     if (loggedIn) {
